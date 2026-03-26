@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 👀</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #e9e6df;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* CARD */
+.card {
+  width: 90%;
+  max-width: 420px;
+  height: 650px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* BACKGROUND IMAGE */
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('Capture.PNG') center/cover;
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+}
+
+/* CONTENT */
+.content {
+  position: absolute;
+  bottom: 0;
+  padding: 25px;
+  color: white;
+  width: 100%;
+}
+
+/* TEXT */
+.top-text {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 15px;
+}
+
+/* BUTTON */
+button {
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* STEPS */
+.hidden {
+  display: none;
+  margin-top: 10px;
+  animation: fade 0.6s ease;
+}
+
+@keyframes fade {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* FINAL (no glow now) */
+.final {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ffd369;
+}
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="bg"></div>
+  <div class="overlay"></div>
+
+  <div class="top-text">I think you know how I feel</div>
+
+  <div class="content">
+
+    <h1>Hey… something feels suspicious 🤔</h1>
+    <p>I don’t know why… but it feels like you already know something.</p>
+
+    <button onclick="revealStep1()">Do I click this? 👀</button>
+
+    <div id="step1" class="hidden">
+      <p>Okay wait… now I’m sure. You’re pretending not to know, aren’t you?</p>
+      <button onclick="revealStep2()">Continue 😏</button>
+    </div>
+
+    <div id="step2" class="hidden">
+      <p>I know that you know…
+…but I’m not sure if you know that I know.</p>
+      <button onclick="playMusicAndReveal()">…but do you know? 😶</button>
+    </div>
+
+    <div id="step3" class="hidden">
+      <p>Yeah… I think you do. Maybe not completely… but enough.</p>
+      <p>And now it’s just a matter of time before I say it out loud.😌</p>
+      <p class="final">This is just Day -5 😏</p>
+    </div>
+
+  </div>
+
+  <div class="footer">Day 1 • A small mystery begins</div>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" preload="auto" playsinline>
+  <source src="WhatsApp.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function revealStep1() {
+  document.getElementById("step1").style.display = "block";
+}
+
+function revealStep2() {
+  document.getElementById("step2").style.display = "block";
+}
+
+function playMusicAndReveal() {
+  const music = document.getElementById("bgMusic");
+
+  music.volume = 0.4;
+
+  const playPromise = music.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch(error => {
+      console.log("Autoplay blocked:", error);
+    });
+  }
+
+  setTimeout(() => {
+    document.getElementById("step3").style.display = "block";
+  }, 700);
+}
+</script>
+
+</body>
+</html>
