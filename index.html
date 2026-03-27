@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 1 👀</title>
+<title>Something 👀</title>
 
 <style>
 * {
@@ -19,25 +19,37 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden;
+}
+
+/* STACK */
+.stack {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 650px;
+  perspective: 1200px;
 }
 
 /* CARD */
 .card {
-  width: 90%;
-  max-width: 420px;
-  height: 650px;
-  border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* BACKGROUND IMAGE */
+/* BG */
 .bg {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url('Capture.PNG') center/cover;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
 }
 
 /* OVERLAY */
@@ -45,7 +57,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2));
 }
 
 /* CONTENT */
@@ -66,15 +78,13 @@ body {
   opacity: 0.8;
 }
 
-h1 {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
+h1 { font-size: 26px; margin-bottom: 10px; }
 
 p {
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.9;
   margin-bottom: 15px;
+  line-height: 1.5;
 }
 
 /* BUTTON */
@@ -85,7 +95,7 @@ button {
   background: rgba(255,255,255,0.15);
   color: white;
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   transition: 0.3s;
 }
 
@@ -97,103 +107,163 @@ button:hover {
 .hidden {
   display: none;
   margin-top: 10px;
-  animation: fade 0.6s ease;
+  animation: fade 0.5s ease;
 }
 
 @keyframes fade {
-  from {opacity: 0; transform: translateY(10px);}
+  from {opacity: 0; transform: translateY(15px);}
   to {opacity: 1; transform: translateY(0);}
 }
 
-/* FINAL (no glow now) */
+/* DAY 2 INITIAL */
+#day2Card {
+  transform: translateY(-130%) scale(0.95);
+  z-index: 2;
+}
+
+/* DAY 1 */
+#day1Card {
+  z-index: 1;
+}
+
+/* ACTIVE TRANSITION */
+.show-day2 #day2Card {
+  transform: translateY(0) scale(1);
+}
+
+.show-day2 #day1Card {
+  transform: scale(0.88) translateY(30px);
+  filter: blur(12px);
+  opacity: 0.6;
+}
+
+/* DIM EFFECT */
+.stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.show-day2 .stack::after {
+  opacity: 1;
+}
+
+/* FINAL */
 .final {
   margin-top: 20px;
   font-weight: bold;
   color: #ffd369;
-}
-
-/* FOOTER */
-.footer {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.6;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="stack" id="stack">
 
-  <div class="bg"></div>
-  <div class="overlay"></div>
+  <!-- DAY 1 -->
+  <div class="card" id="day1Card">
+    <div class="bg" style="background-image:url('Capture.PNG')"></div>
+    <div class="overlay"></div>
 
-  <div class="top-text">I think you know how I feel</div>
+    <div class="top-text">I think you know how I feel</div>
 
-  <div class="content">
+    <div class="content">
+      <h1>Hey… something feels suspicious 🤔</h1>
+      <p>I don’t know why… but it feels like you already know something.</p>
 
-    <h1>Hey… something feels suspicious 🤔</h1>
-    <p>I don’t know why… but it feels like you already know something.</p>
+      <button onclick="revealStep1()">Do I click this? 👀</button>
 
-    <button onclick="revealStep1()">Do I click this? 👀</button>
+      <div id="step1" class="hidden">
+        <p>Okay wait… now I’m sure.<br>You’re pretending not to know, aren’t you?</p>
+        <button onclick="revealStep2()">Continue 😏</button>
+      </div>
 
-    <div id="step1" class="hidden">
-      <p>Okay wait… now I’m sure. You’re pretending not to know, aren’t you?</p>
-      <button onclick="revealStep2()">Continue 😏</button>
+      <div id="step2" class="hidden">
+        <p>I know that you know…<br><br>but I’m not sure if you know that I know.</p>
+        <button onclick="playMusicAndReveal()">…but do you know? 😶</button>
+      </div>
+
+      <div id="step3" class="hidden">
+        <p>Yeah… I think you do.<br>Maybe not completely… but enough.</p>
+        <p>And now it’s just a matter of time before I say it out loud 😌</p>
+        <p class="final">This is just Day -5 😏</p>
+      </div>
     </div>
-
-    <div id="step2" class="hidden">
-      <p>I know that you know…
-…but I’m not sure if you know that I know.</p>
-      <button onclick="playMusicAndReveal()">…but do you know? 😶</button>
-    </div>
-
-    <div id="step3" class="hidden">
-      <p>Yeah… I think you do. Maybe not completely… but enough.</p>
-      <p>And now it’s just a matter of time before I say it out loud.😌</p>
-      <p class="final">This is just Day -5 😏</p>
-    </div>
-
   </div>
 
-  <div class="footer">Day 1 • A small mystery begins</div>
+  <!-- DAY 2 -->
+  <div class="card" id="day2Card">
+    <div class="bg" style="background-image:url('Capture_2.PNG')"></div>
+    <div class="overlay"></div>
+
+    <div class="top-text">So… this wasn’t random </div>
+
+    <div class="content">
+      <h1>About yesterday… 👀</h1>
+      <p>That wasn’t random.<br>And it definitely wasn’t for just anyone.</p>
+
+      <button onclick="d2step1()">Wait… what do you mean? 🤔</button>
+
+      <div id="d2s1" class="hidden">
+        <p>You came back again…<br>so clearly, something got your attention 😏</p>
+        <button onclick="d2step2()">Okay… continue</button>
+      </div>
+
+      <div id="d2s2" class="hidden">
+        <p>This whole thing?<br>Yeah… it’s about someone.</p>
+        <button onclick="d2step3()">Someone? 👀</button>
+      </div>
+
+      <div id="d2s3" class="hidden">
+        <p>Someone who acts like they don’t know…<br>but notices everything.</p>
+        <p>Someone who probably smiled yesterday…<br>but didn’t say anything.</p>
+        <button onclick="d2step4()">Okay… now I’m curious 😶</button>
+      </div>
+
+      <div id="d2s4" class="hidden">
+        <p>If you’re still here…<br>I think you already know who I’m talking about.</p>
+        <p class="final">Let’s see if you admit it tomorrow 😏</p>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <!-- AUDIO -->
-<audio id="bgMusic" preload="auto" playsinline>
-  <source src="WhatsApp.mp3" type="audio/mpeg">
-</audio>
+<audio id="audio1" src="WhatsApp.mp3"></audio>
+<audio id="audio2" src="WhatsApp.mp3"></audio>
 
 <script>
-function revealStep1() {
-  document.getElementById("step1").style.display = "block";
+function revealStep1(){ step1.style.display="block"; }
+function revealStep2(){ step2.style.display="block"; }
+
+function playMusicAndReveal(){
+  audio1.volume = 0.3;
+  audio1.play().catch(()=>{});
+
+  setTimeout(()=> step3.style.display="block",10);
+
+  // PERFECT TIMING
+  setTimeout(goToDay2, 1200);
 }
 
-function revealStep2() {
-  document.getElementById("step2").style.display = "block";
+function goToDay2(){
+  audio1.pause();
+  audio2.volume = 0.3;
+  audio2.play().catch(()=>{});
+
+  document.getElementById("stack").classList.add("show-day2");
 }
 
-function playMusicAndReveal() {
-  const music = document.getElementById("bgMusic");
-
-  music.volume = 0.4;
-
-  const playPromise = music.play();
-
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      console.log("Autoplay blocked:", error);
-    });
-  }
-
-  setTimeout(() => {
-    document.getElementById("step3").style.display = "block";
-  }, 700);
-}
+/* DAY 2 */
+function d2step1(){ d2s1.style.display="block"; }
+function d2step2(){ d2s2.style.display="block"; }
+function d2step3(){ d2s3.style.display="block"; }
+function d2step4(){ d2s4.style.display="block"; }
 </script>
 
 </body>
